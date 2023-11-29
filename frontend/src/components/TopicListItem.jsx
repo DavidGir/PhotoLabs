@@ -2,16 +2,16 @@ import React from "react";
 
 import "../styles/TopicListItem.scss";
 
-const sampleDataForTopicListItem = {
-  id: "1",
-  slug: "topic-1",
-  label: "Nature",
-};
-
-const TopicListItem = () => {
+const TopicListItem = (props) => {
+  console.log("props", props);
+  // Extract the properties from props:
+  const { id, slug, title } = props;
+  
   return (
     <div className="topic-list__item">
-      {/* Insert React */}
+      <span>{id}</span>
+      <span>{slug}</span>
+      <span>{title}</span>
     </div>
   );
 };
