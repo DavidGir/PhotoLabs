@@ -9,8 +9,8 @@ const TopicListItem = (props) => {
   
   return (
     <div className="topic-list__item">
-      <span>{id}</span>
-      <span>{slug}</span>
+      {/* <span>{id}</span> */}
+      {/* <span>{slug}</span> */}
       <span>{title}</span>
     </div>
   );
