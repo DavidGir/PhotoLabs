@@ -3,19 +3,18 @@ import PhotoListItem from "./PhotoListItem";
 import "../styles/PhotoList.scss";
 
 const PhotoList = (props) => {
-  const { photos } = props;
+  const { photos, addFavorite, removeFavorite, favorites } = props;
   
   return (
     <ul className="photo-list">
-      {photos.map(item => (
+      {photos.map(photo => (
        
         <PhotoListItem
-          key={item.id}
-          id={item.id}
-          location={{ city: item.location.city, country: item.location.country }}
-          imageSource={item.urls.regular}
-          username={item.user.username}
-          profile={item.user.profile}
+          key={photo.id}
+          photo={photo}
+          addFavorite={addFavorite}
+          removeFavorite={removeFavorite}
+          favorites={favorites}
         />
        
       ))}
