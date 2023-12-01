@@ -14,10 +14,7 @@
 .photo-details-modal__close-button {
   background-color: transparent;
   border: none;
-  color: white;
-  position: fixed;
-  text-align: center;
-  text-decoration: none;
+  position: relative;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
@@ -34,9 +31,11 @@
   max-width: 95%;
   display: block;
   margin: auto;
-  margin-top: 40px;
+  margin-top: 20px;
   border-radius: 8px;
 }
+
+
 
 .photo-details-modal__top-bar {
   display: flex;
@@ -49,6 +48,7 @@
 
 .photo-details-modal__photographer-details {
   display: flex;
+  margin-left: 20px;
   font-size: 16px;
 }
 
