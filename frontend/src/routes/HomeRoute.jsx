@@ -5,9 +5,12 @@ import '../styles/HomeRoute.scss';
 import PhotoList from '../components/PhotoList';
 import topics from '../mocks/topics';
 import photos from '../mocks/photos';
+import PhotoDetailsModal from './PhotoDetailsModal';
 
 const HomeRoute = () => {
   const [favorites, setFavorites] = useState([]);
+  // Add state to track currently selected photo for modal
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   const addFavorite = (photo) => {
     setFavorites(prevFavorites => [...prevFavorites, photo]);
@@ -15,6 +18,10 @@ const HomeRoute = () => {
 
   const removeFavorite = (photoId) => {
     setFavorites(prevFavorites => prevFavorites.filter(photo => photo.id !== photoId));
+  };
+
+  const openModal = (photo) => {
+    setSelectedPhoto(photo);
   };
   
   return (
@@ -28,7 +35,14 @@ const HomeRoute = () => {
         addFavorite={addFavorite}
         removeFavorite={removeFavorite}
         favorites={favorites}
+        openModal={openModal}
       />
+      {selectedPhoto && (
+        <PhotoDetailsModal
+          photo={selectedPhoto}
+          closeModal={() => setSelectedPhoto(null)}
+        />
+      )}
     </div>
   );
 };
