@@ -7,7 +7,11 @@ const PhotoFavButton = (props) => {
   const { photo, isFavorited, addFavorite, removeFavorite } = props;
 
   // Make handler for the click event:
-  const toggleFavorite = () => (isFavorited ? removeFavorite(photo.id) : addFavorite(photo));
+  const toggleFavorite = (event) => {
+    // Prevent triggering modal open:
+    event.stopPropagation();
+    return isFavorited ? removeFavorite(photo.id) : addFavorite(photo);
+  };
 
   return (
     <div className="photo-list__fav-icon">
