@@ -3,7 +3,7 @@ import PhotoListItem from "./PhotoListItem";
 import "../styles/PhotoList.scss";
 
 const PhotoList = (props) => {
-  const { photos, addFavorite, removeFavorite, favorites } = props;
+  const { photos, addFavorite, removeFavorite, favorites, openModal } = props;
   
   return (
     <ul className="photo-list">
@@ -15,6 +15,7 @@ const PhotoList = (props) => {
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
           favorites={favorites}
+          openModal={openModal}
         />
        
       ))}
