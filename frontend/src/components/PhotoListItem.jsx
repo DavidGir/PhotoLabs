@@ -4,10 +4,10 @@ import PhotoFavButton from './PhotoFavButton';
 
 const PhotoListItem = (props) => {
 
-  const { photo, addFavorite, removeFavorite, favorites } = props;
+  const { photo, addFavorite, removeFavorite, favorites, openModal } = props;
 
   return (
-    <div className="photo-list__item" id={photo.id}>
+    <div className="photo-list__item" id={photo.id} onClick={() => openModal(photo)}>
       <PhotoFavButton
         photo={photo}
         isFavorited={favorites.some(favPhoto => favPhoto.id === photo.id)}
@@ -26,7 +26,7 @@ const PhotoListItem = (props) => {
           className="photo-list__user-profile"
         />
         <div className="photo__list user-info">
-          <h3>{photo.user.username}</h3>
+          <h3>{photo.user.name}</h3>
           <p className="photo-list__user-location">{`${photo.location.city}, ${photo.location.country}`}</p>
         </div>
       </div>
