@@ -1,69 +1,94 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 import photos from '../mocks/photos';
 
+// Define the initial state that will be used by the reducer function:
+const initialState = {
+  // List of favorite photos:
+  favorites: [],
+  // Currently selected photo when modal is open:
+  selectedPhoto: null,
+  // Photos similar to the selected photo:
+  similarPhotos: [],
+  // All photos data from mock data:
+  photos:[...photos]
+};
+
+// Action types that will be used by the reducer function and application:
+const ACTIONS = {
+  FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
+  FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
+  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
+  CLOSE_MODAL: 'CLOSE_MODAL'
+};
+
+// Reducer function to handle state changes based on actions:
+const reducer = function(state, action) {
+  switch (action.type) {
+  case ACTIONS.FAV_PHOTO_ADDED:
+    return {
+      ...state,
+      favorites: [...state.favorites, action.payload]
+    };
+  case ACTIONS.FAV_PHOTO_REMOVED:
+    return {
+      ...state,
+      favorites: state.favorites.filter(photo => photo.id !== action.payload)
+    };
+  case ACTIONS.DISPLAY_PHOTO_DETAILS: {
+    const similarPhotoObjects = Object.values(action.payload.similarPhotos).map(photo => ({
+      ...photo,
+      isFavorited: state.favorites.some(favPhoto => favPhoto.id === photo.id)
+    }));
+    return {
+      ...state,
+      selectedPhoto: action.payload,
+      similarPhotos: similarPhotoObjects
+    };
+  }
+  case ACTIONS.CLOSE_MODAL:
+    return {
+      ...state,
+      selectedPhoto: null
+    };
+  default:
+    throw new Error(`Unsupported action type: ${action.type}`);
+  }
+};
+
+// Custom hook to manage application data using useReducer:
 const useApplicationData = () => {
-  // State to track user's favorite photos:
-  const [favorites, setFavorites] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  // State to track the currently selected photo for display in modal:
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  // Display actions for adding/removing favorites, displaying photo details and closing the modal:
+  const addFavorite = photo => dispatch({ type: ACTIONS.FAV_PHOTO_ADDED, payload: photo });
+  const removeFavorite = photoId => dispatch({ type: ACTIONS.FAV_PHOTO_REMOVED, payload: photoId });
+  const displayPhotoDetails = photo => dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS, payload: photo });
+  const closeModal = () => dispatch({ type: ACTIONS.CLOSE_MODAL });
 
-  // State to track similar photos of the selected photo:
-  const [similarPhotos, setSimilarPhotos] = useState([]);
+  // Function which checks if a photo has been favorited or not:
+  const isPhotoFavorited = photoId => state.favorites.some(favPhoto => favPhoto.id === photoId);
 
-  // Function to add a photo to favorites:
-  const addFavorite = (newFavorite) => {
-    setFavorites(prev => [...prev, newFavorite]);
-  };
-
-  // Function to remove a photo from favorites:
-  const removeFavorite = (photoId) => {
-    setFavorites(prev => prev.filter(photo => photo.id !== photoId));
-  };
-
-  // Function to check if a photo is in favorites:
-  const isPhotoFavorited = (photoId) => {
-    return favorites.some(favPhoto => favPhoto.id === photoId);
-  };
-
-  // Function to open the modal and display the selected photo
-  // Also sets similar photos for the selected photo within the modal:
-  const openModal = (photo) => {
-    setSelectedPhoto(photo);
-    const similarPhotoObjects = Object.values(photo.similarPhotos).map(photo => ({
+  // Selector function to derive photos with favorited status:
+  const selectPhotosWithFavoritedStatus = () => {
+    return state.photos.map(photo => ({
       ...photo,
       isFavorited: isPhotoFavorited(photo.id)
     }));
-    setSimilarPhotos(similarPhotoObjects);
   };
 
-  // Function to close the modal
-  const closeModal = () => {
-    setSelectedPhoto(null);
-  };
-
-  // Adding favorited status as a property to each photo in the photos array
-  // This will allow for easy tracking of whether a photo is favorited or not:
-  const photosWithFavoritedStatus = photos.map(photo => ({
-    ...photo,
-    isFavorited: isPhotoFavorited(photo.id)
-  }));
-
-  // Exposing the state and actions for use in components:
+  // Return state, actions handlers and expose function:
   return {
     state: {
-      favorites,
-      selectedPhoto,
-      similarPhotos,
-      photosWithFavoritedStatus
+      ...state,
+      photosWithFavoritedStatus: selectPhotosWithFavoritedStatus()
     },
     actions: {
       addFavorite,
       removeFavorite,
-      openModal,
-      closeModal,
-      isPhotoFavorited
-    }
+      displayPhotoDetails,
+      closeModal
+    },
+    isPhotoFavorited
   };
 };
 
