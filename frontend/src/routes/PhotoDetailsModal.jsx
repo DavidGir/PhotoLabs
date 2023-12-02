@@ -23,7 +23,7 @@ const PhotoDetailsModal = (props) => {
       <div className="photo-details-modal__image">
         <PhotoFavButton
           photo={photo}
-          isFavorited={isMainPhotoFavorited}
+          isPhotoFavorited={isMainPhotoFavorited}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
         />
