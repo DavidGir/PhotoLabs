@@ -4,7 +4,7 @@ import PhotoFavButton from './PhotoFavButton';
 
 const PhotoListItem = (props) => {
 
-  const { photo, addFavorite, removeFavorite, openModal, isFavorited } = props;
+  const { photo, addFavorite, removeFavorite, openModal, isPhotoFavorited } = props;
 
   // Handle click only if openModal is provided
   const handleClick = () => {
@@ -17,7 +17,7 @@ const PhotoListItem = (props) => {
     <div className="photo-list__item" id={photo.id} onClick={handleClick}>
       <PhotoFavButton
         photo={photo}
-        isFavorited={isFavorited}
+        isPhotoFavorited={isPhotoFavorited}
         addFavorite={addFavorite}
         removeFavorite={removeFavorite}
       />
