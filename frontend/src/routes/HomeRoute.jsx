@@ -7,9 +7,12 @@ import topics from '../mocks/topics';
 import PhotoDetailsModal from './PhotoDetailsModal';
 
 const HomeRoute = () => {
-  const { state, actions } = useApplicationData();
+  // Using custom hook to get state and actions:
+  const { state, actions, isPhotoFavorited } = useApplicationData();
+
+  // Destructuring state and actions for easier access
   const { photosWithFavoritedStatus, selectedPhoto, similarPhotos } = state;
-  const { addFavorite, removeFavorite, openModal, closeModal, isPhotoFavorited } = actions;
+  const { addFavorite, removeFavorite, displayPhotoDetails, closeModal } = actions;
 
   return (
     <div className="home-route">
@@ -18,7 +21,7 @@ const HomeRoute = () => {
         photos={photosWithFavoritedStatus}
         addFavorite={addFavorite}
         removeFavorite={removeFavorite}
-        openModal={openModal}
+        openModal={displayPhotoDetails}
         isPhotoFavorited={isPhotoFavorited}
       />
       {selectedPhoto && (
