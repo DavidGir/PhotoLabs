@@ -1,5 +1,5 @@
-import { useReducer } from 'react';
-import photos from '../mocks/photos';
+import { useReducer, useEffect } from 'react';
+import axios from 'axios';
 
 // Define the initial state that will be used by the reducer function:
 const initialState = {
@@ -9,8 +9,10 @@ const initialState = {
   selectedPhoto: null,
   // Photos similar to the selected photo:
   similarPhotos: [],
-  // All photos data from mock data:
-  photos:[...photos]
+  // All photos data from API:
+  photoData: [],
+  // All topics data from API:
+  topicData: []
 };
 
 // Action types that will be used by the reducer function and application:
@@ -18,7 +20,9 @@ const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
   FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
   DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
-  CLOSE_MODAL: 'CLOSE_MODAL'
+  CLOSE_MODAL: 'CLOSE_MODAL',
+  SET_PHOTO_DATA: 'SET_PHOTO_DATA',
+  SET_TOPIC_DATA: 'SET_TOPIC_DATA'
 };
 
 // Reducer function to handle state changes based on actions:
@@ -35,20 +39,31 @@ const reducer = function(state, action) {
       favorites: state.favorites.filter(photo => photo.id !== action.payload)
     };
   case ACTIONS.DISPLAY_PHOTO_DETAILS: {
-    const similarPhotoObjects = Object.values(action.payload.similarPhotos).map(photo => ({
+    // The API returns 'similar_photos' which causes ESlint errors; transform and rename to 'similarPhotos':
+    const similarPhotos = action.payload.similar_photos.map(photo => ({
       ...photo,
       isFavorited: state.favorites.some(favPhoto => favPhoto.id === photo.id)
     }));
     return {
       ...state,
       selectedPhoto: action.payload,
-      similarPhotos: similarPhotoObjects
+      similarPhotos
     };
   }
   case ACTIONS.CLOSE_MODAL:
     return {
       ...state,
       selectedPhoto: null
+    };
+  case ACTIONS.SET_PHOTO_DATA:
+    return {
+      ...state,
+      photoData: action.payload
+    };
+  case ACTIONS.SET_TOPIC_DATA:
+    return {
+      ...state,
+      topicData: action.payload
     };
   default:
     throw new Error(`Unsupported action type: ${action.type}`);
@@ -65,12 +80,34 @@ const useApplicationData = () => {
   const displayPhotoDetails = photo => dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS, payload: photo });
   const closeModal = () => dispatch({ type: ACTIONS.CLOSE_MODAL });
 
+  // useEffect func for fetching photoData through API:
+  useEffect(() => {
+    axios.get('/api/photos')
+      .then(response => {
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: response.data });
+      })
+      .catch(error => {
+        console.error('Error fetching photos:', error);
+      });
+  }, []);
+
+  // useEffect func for fetching topicData through API:
+  useEffect(() => {
+    axios.get('/api/topics')
+      .then(response => {
+        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: response.data });
+      })
+      .catch(error => {
+        console.error('Error fetching topics:', error);
+      });
+  }, []);
+
   // Function which checks if a photo has been favorited or not:
   const isPhotoFavorited = photoId => state.favorites.some(favPhoto => favPhoto.id === photoId);
 
   // Selector function to derive photos with favorited status:
   const selectPhotosWithFavoritedStatus = () => {
-    return state.photos.map(photo => ({
+    return state.photoData.map(photo => ({
       ...photo,
       isFavorited: isPhotoFavorited(photo.id)
     }));
