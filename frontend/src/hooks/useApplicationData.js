@@ -113,6 +113,15 @@ const useApplicationData = () => {
     }));
   };
 
+  // Function that fetches photos based on the topic ID:
+  const getPhotosByTopic = (topicId) => {
+    axios.get(`/api/topics/photos/${topicId}`)
+      .then(response => {
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: response.data });
+      })
+      .catch(error => console.error('Error fetching photos by topic:', error));
+  };
+
   // Return state, actions handlers and expose function:
   return {
     state: {
@@ -125,7 +134,8 @@ const useApplicationData = () => {
       displayPhotoDetails,
       closeModal
     },
-    isPhotoFavorited
+    isPhotoFavorited,
+    getPhotosByTopic
   };
 };
 
