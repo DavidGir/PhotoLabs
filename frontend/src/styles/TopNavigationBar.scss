@@ -18,3 +18,34 @@
   text-underline-position: auto;
   margin-left: 24px;
 }
+
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.4em;
+
+  .icon-on {
+    color: #ccc;  
+  }
+
+  .icon-off {
+    color: #ccc; 
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+@keyframes flash {
+  0% { color: yellow; }
+  25% { color: white; }
+  50% { color: yellow; }
+  75% { color: white; }
+  100% { color: yellow; }
+}
+
+.icon-flash {
+  animation: flash 1s;
+}
