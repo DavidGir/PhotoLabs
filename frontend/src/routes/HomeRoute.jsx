@@ -6,16 +6,26 @@ import PhotoList from '../components/PhotoList';
 import PhotoDetailsModal from './PhotoDetailsModal';
 
 const HomeRoute = () => {
-  // Using custom hook to get state and actions:
-  const { state, actions, isPhotoFavorited } = useApplicationData();
+  // Using custom hook to get state, actions and funcs:
+  const { state, actions, isPhotoFavorited, getPhotosByTopic } = useApplicationData();
 
   // Destructuring state and actions for easier access
   const { photosWithFavoritedStatus, selectedPhoto, similarPhotos, topicData } = state;
   const { addFavorite, removeFavorite, displayPhotoDetails, closeModal } = actions;
 
+  // Function to be called when a topic is clicked:
+  const handleTopicClick = (topicId) => {
+    // This will trigger fetching photos for the selected topic:
+    getPhotosByTopic(topicId);
+  };
+
   return (
     <div className="home-route">
-      <TopNavigationBar favorites={state.favorites} topics={topicData} />
+      <TopNavigationBar
+        favorites={state.favorites}
+        topics={topicData}
+        onTopicClick={handleTopicClick}
+      />
       <PhotoList
         photos={photosWithFavoritedStatus}
         addFavorite={addFavorite}
