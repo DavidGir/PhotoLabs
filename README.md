@@ -17,12 +17,12 @@ To set up PhotoLabs locally, follow these steps:
 
 1. Clone the repository via SSH:
 ```bash
-git clone git@github.com:DavidGir/photolabs-starter.git
+git clone git@github.com:DavidGir/PhotoLabs.git
 ```
 
 2. Navigate to the project's directory:
 ```bash
-cd photolabs-starter
+cd PhotoLabs
 ```
 
 3. Navigate to the frontend directory and the backend directory to install dependencies from both:
