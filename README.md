@@ -4,6 +4,17 @@
 
 PhotoLabs is a modern, responsive web application inspired by the aesthetics of popular photo-sharing platforms like Pinterest. It features a dynamic interface for exploring and interacting with a diverse collection of photographs. 
 
+## Application Screenshots
+
+### Home Page
+![Home Page](https://github.com/DavidGir/PhotoLabs/frontend/public/screenshots/HomePage.png "Home Page of PhotoLabs")
+
+### Photo Detail View
+![Photo Detail](https://github.com/DavidGir/PhotoLabs/frontend/public/screenshots/PhotoView.png "Photo Detail View")
+
+### Dark Mode Toggle
+![Dark Mode](https://github.com/DavidGir/PhotoLabs/frontend/public/screenshots/DarkMode.png "Dark Mode Feature")
+
 ## Features
 
 - **Dark Mode Toggle:** Allows users to switch between light and dark themes for a comfortable viewing experience. This can be done by clicking on the camera icon next to the logo in the navigation bar.
