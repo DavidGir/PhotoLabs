@@ -7,13 +7,13 @@ PhotoLabs is a modern, responsive web application inspired by the aesthetics of 
 ## Application Screenshots
 
 ### Home Page
-![Home Page](https://github.com/DavidGir/PhotoLabs/frontend/public/screenshots/HomePage.png "Home Page of PhotoLabs")
+![Home Page](./frontend/public/screenshots/HomePage.png "Home Page of PhotoLabs")
 
 ### Photo Detail View
-![Photo Detail](https://github.com/DavidGir/PhotoLabs/frontend/public/screenshots/PhotoView.png "Photo Detail View")
+![Photo Detail](./frontend/public/screenshots/PhotoView.png "Photo Detail View")
 
 ### Dark Mode Toggle
-![Dark Mode](https://github.com/DavidGir/PhotoLabs/frontend/public/screenshots/DarkMode.png "Dark Mode Feature")
+![Dark Mode](./frontend/public/screenshots/DarkMode.png "Dark Mode Feature")
 
 ## Features
 
