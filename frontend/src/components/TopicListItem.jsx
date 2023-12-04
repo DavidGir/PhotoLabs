@@ -5,12 +5,10 @@ import "../styles/TopicListItem.scss";
 const TopicListItem = (props) => {
   
   // Extract the properties from props:
-  const { id, slug, title } = props;
+  const { title, onClick } = props;
   
   return (
-    <div className="topic-list__item">
-      <span>{id}</span>
-      <span>{slug}</span>
+    <div className="topic-list__item" onClick={onClick}>
       <span>{title}</span>
     </div>
   );
