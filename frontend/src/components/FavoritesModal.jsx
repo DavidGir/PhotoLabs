@@ -6,7 +6,6 @@ import PhotoListItem from "./PhotoListItem";
 const FavoritesModal = (props) => {
   const { favorites, closeModal, addFavorite, removeFavorite } = props;
   
-  console.log("favorites are:", favorites);
   return (
     <div className="favorites-modal">
       {/* Close button for the modal */}
