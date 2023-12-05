@@ -6,7 +6,7 @@ import TopicList from './TopicList';
 import '../styles/TopNavigationBar.scss';
 
 const TopNavigationBar = (props) => {
-  const { topics, favorites, onTopicClick, onToggleDarkMode, isDarkMode } = props;
+  const { topics, favorites, onTopicClick, onToggleDarkMode, isDarkMode, toggleFavoritesModal } = props;
   
   // Styling state to create flashing camera:
   const [isFlashing, setIsFlashing] = useState(false);
@@ -15,6 +15,14 @@ const TopNavigationBar = (props) => {
     onToggleDarkMode();
     setIsFlashing(true);
     setTimeout(() => setIsFlashing(false), 1000);
+  };
+
+  const handleFavoritesClick = () => {
+    if (favorites.length > 0) {
+      toggleFavoritesModal();
+    } else {
+      alert('You have no favorite photos yet!');
+    }
   };
 
   return (
@@ -29,7 +37,7 @@ const TopNavigationBar = (props) => {
         </button>
       </span>
       <TopicList topics={topics} onTopicClick={onTopicClick}/>
-      <FavBadge favorites={favorites}/>
+      <FavBadge favorites={favorites} toggleFavoritesModal={() => handleFavoritesClick()}/>
     </div>
   );
 };
