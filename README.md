@@ -15,12 +15,16 @@ PhotoLabs is a modern, responsive web application inspired by the aesthetics of 
 ### Dark Mode Toggle
 ![Dark Mode](./frontend/public/screenshots/DarkMode.png "Dark Mode Feature")
 
+### Favorites Detail View
+![Favorites Modal](./frontend/public/screenshots/FavoritesModal.png "Favorite Photos Modal View")
+
 ## Features
 
 - **Dark Mode Toggle:** Allows users to switch between light and dark themes for a comfortable viewing experience. This can be done by clicking on the camera icon next to the logo in the navigation bar.
 - **Interactive Photo Gallery:** Users can browse through photos and mark their favorites.
 - **Topic-Based Navigation:** A navigation bar enables users to filter photos based on specific topics. Users can also see a favorites notification which keeps track of how many photos they liked.
 - **Detailed Photo View:** A modal presentation provides in-depth details of each photo, including information about the photographer and a selection of similar photos.
+- **Favorites Modal View:** A modal presentation provides a view of all favorite photos upon clicking on the heart badge with notifications on the nav bar. Remove favorite photos from modal by re-clicking photo heart icon. Favorites modal cannot be opened if no photos are favorited (alert notification). 
 
 ## Installation
 
