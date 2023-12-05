@@ -1,0 +1,5 @@
+.fav-icon {
+  &:hover path {
+    fill: red; /* Changes the fill color of the path on hover */
+  }
+}
