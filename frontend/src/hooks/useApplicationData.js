@@ -12,7 +12,9 @@ const initialState = {
   // All photos data from API:
   photoData: [],
   // All topics data from API:
-  topicData: []
+  topicData: [],
+  // State for the favorites modal:
+  showFavoritesModal: false
 };
 
 // Action types that will be used by the reducer function and application:
@@ -22,7 +24,8 @@ const ACTIONS = {
   DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
   CLOSE_MODAL: 'CLOSE_MODAL',
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
-  SET_TOPIC_DATA: 'SET_TOPIC_DATA'
+  SET_TOPIC_DATA: 'SET_TOPIC_DATA',
+  TOGGLE_FAVORITES_MODAL: 'TOGGLE_FAVORITES_MODAL'
 };
 
 // Reducer function to handle state changes based on actions:
@@ -65,6 +68,12 @@ const reducer = function(state, action) {
       ...state,
       topicData: action.payload
     };
+  case ACTIONS.TOGGLE_FAVORITES_MODAL:
+    return {
+      ...state,
+      // Toggling modal visibility:
+      showFavoritesModal: !state.showFavoritesModal
+    };
   default:
     throw new Error(`Unsupported action type: ${action.type}`);
   }
@@ -79,6 +88,7 @@ const useApplicationData = () => {
   const removeFavorite = photoId => dispatch({ type: ACTIONS.FAV_PHOTO_REMOVED, payload: photoId });
   const displayPhotoDetails = photo => dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS, payload: photo });
   const closeModal = () => dispatch({ type: ACTIONS.CLOSE_MODAL });
+  const toggleFavoritesModal = () => dispatch({ type: ACTIONS.TOGGLE_FAVORITES_MODAL});
 
   // useEffect func for fetching photoData through API:
   useEffect(() => {
@@ -132,7 +142,8 @@ const useApplicationData = () => {
       addFavorite,
       removeFavorite,
       displayPhotoDetails,
-      closeModal
+      closeModal,
+      toggleFavoritesModal
     },
     isPhotoFavorited,
     getPhotosByTopic
